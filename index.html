@@ -40,6 +40,7 @@
             color: var(--body-color);
             background-color: var(--white);
             overflow-x: hidden;
+            padding-top: 80px; /* Prevent content from hiding behind fixed header */
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -72,8 +73,13 @@
             padding: 0 20px;
         }
 
+        /* Adjusted Scroll Margin for Sticky Header Offset */
+        section, .hero {
+            scroll-margin-top: 100px;
+        }
+
         .section {
-            padding: 100px 0; /* Reduced slightly for better general fit */
+            padding: 100px 0;
         }
 
         .section.bg-gray {
@@ -117,11 +123,12 @@
         /* --- HEADER --- */
         .header {
             padding: 20px 0;
-            position: fixed; /* Fixed for better mobile UX */
+            position: fixed;
             width: 100%;
             top: 0;
+            left: 0;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.95); /* Slight background for readability */
+            background: rgba(255, 255, 255, 0.98);
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
@@ -157,7 +164,6 @@
             color: var(--primary-color);
         }
 
-        /* Mobile Menu Toggle (Hidden on Desktop) */
         .hamburger {
             display: none;
             font-size: 24px;
@@ -167,12 +173,12 @@
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 100vh;
+            min-height: 90vh; /* Adjusted for better mobile fit */
             display: flex;
             align-items: center;
             background: linear-gradient(to right, #f8f9fc 50%, #fff 50%);
-            padding-top: 120px; /* Account for fixed header */
             padding-bottom: 50px;
+            margin-top: 0;
         }
 
         .hero-content {
@@ -319,7 +325,7 @@
             margin-bottom: 25px;
         }
 
-        /* --- PORTFOLIO --- */
+        /* --- PORTFOLIO (UPDATED FOR STATIC TEXT) --- */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -341,24 +347,33 @@
         .p-bg-5 { background: linear-gradient(45deg, #4caf50, #8bc34a); }
         .p-bg-6 { background: linear-gradient(45deg, #673ab7, #9c27b0); }
 
+        /* FIXED: Text is always visible now */
         .portfolio-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.3); /* Slight overlay to ensure text reads well */
             color: white;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            transition: var(--transition);
+            opacity: 1; /* Always visible */
             padding: 20px;
             text-align: center;
         }
 
-        .portfolio-item:hover .portfolio-overlay { opacity: 1; }
-        .portfolio-overlay h4 { transform: translateY(20px); transition: var(--transition); color: #fff;}
-        .portfolio-item:hover .portfolio-overlay h4 { transform: translateY(0); }
+        .portfolio-overlay h4 { 
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 22px;
+            font-weight: 600;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .portfolio-overlay p {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+        }
 
         /* --- CONTACT SECTION --- */
         .contact-section-wrapper {
@@ -432,7 +447,6 @@
             color: var(--primary-color);
         }
 
-        /* Right Side Form Card */
         .contact-right {
             flex: 1;
             min-width: 350px;
@@ -462,13 +476,8 @@
             transition: 0.3s;
         }
 
-        .form-input::placeholder {
-            color: #999;
-        }
-
-        .form-input:focus {
-            border-bottom-color: var(--heading-color);
-        }
+        .form-input::placeholder { color: #999; }
+        .form-input:focus { border-bottom-color: var(--heading-color); }
 
         .btn-hire-dark {
             background-color: var(--dark-btn);
@@ -484,7 +493,7 @@
             display: inline-block;
             margin-top: 10px;
             border-radius: 2px;
-            width: 100%; /* Full width on button looks better on forms */
+            width: 100%;
         }
 
         .btn-hire-dark:hover {
@@ -509,6 +518,7 @@
             box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
             z-index: 9999;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .footer-bottom {
@@ -520,22 +530,18 @@
 
         .footer-bottom p { font-size: 14px; color: #888; }
 
-        /* ------------------------------------------- */
-        /* --------- MOBILE RESPONSIVE STYLES -------- */
-        /* ------------------------------------------- */
-
+        /* --- MOBILE RESPONSIVE --- */
         @media (max-width: 992px) {
             .hero h1 { font-size: 45px; }
             .section { padding: 80px 0; }
         }
 
         @media (max-width: 768px) {
-            /* Header & Nav */
             .hamburger { display: block; }
             
             .nav-links {
                 position: fixed;
-                top: 70px; /* Below header */
+                top: 70px;
                 left: 0;
                 width: 100%;
                 background: #fff;
@@ -544,20 +550,16 @@
                 padding: 30px 0;
                 gap: 20px;
                 box-shadow: 0 10px 10px rgba(0,0,0,0.05);
-                display: none; /* Hidden by default */
+                display: none;
             }
 
-            .nav-links.active {
-                display: flex;
-            }
+            .nav-links.active { display: flex; }
 
-            /* Hero */
             .hero {
-                flex-direction: column-reverse; /* Text below image on mobile, or standard column */
                 flex-direction: column; 
                 text-align: center;
-                padding-top: 100px;
-                background: var(--bg-light); /* Remove split gradient */
+                padding-top: 50px; /* Reduced since header space is handled globally */
+                background: var(--bg-light);
             }
 
             .hero-content {
@@ -567,55 +569,40 @@
 
             .hero-text {
                 padding-right: 0;
-                order: 2; /* Text below image */
+                order: 2;
             }
 
             .hero-img {
                 width: 100%;
                 justify-content: center;
-                order: 1; /* Image on top */
+                order: 1;
                 margin-bottom: 20px;
             }
             
             .hero-img img {
-                max-height: 400px; /* Limit height on mobile */
+                max-height: 400px;
                 width: 100%;
                 object-fit: cover;
                 object-position: top;
             }
 
-            .hero h1 {
-                font-size: 32px; /* Smaller font for mobile */
-                margin-bottom: 15px;
-            }
+            .hero h1 { font-size: 32px; margin-bottom: 15px; }
+            .hero p { font-size: 15px; margin-bottom: 30px; }
 
-            .hero p {
-                font-size: 15px;
-                margin-bottom: 30px;
-            }
-
-            /* Sections General */
             .section { padding: 60px 0; }
             .section-title h2 { font-size: 32px; }
 
-            /* Grids */
-            .about-grid, 
-            .skills-grid,
-            .resume-grid, 
-            .services-grid, 
-            .contact-split {
+            .about-grid, .skills-grid, .resume-grid, .services-grid, .contact-split {
                 grid-template-columns: 1fr;
                 flex-direction: column;
                 gap: 40px;
             }
 
             .about-text h2 { font-size: 28px; }
-
-            /* Contact */
             .contact-right { width: 100%; min-width: auto; }
             .contact-form-card { padding: 30px 20px; }
             .contact-left h2 { font-size: 24px; }
-            .arrow-line { display: none; } /* Hide arrow on mobile */
+            .arrow-line { display: none; }
         }
     </style>
 </head>
@@ -625,12 +612,9 @@
     <div class="header">
         <div class="container navbar">
             <div class="logo">Kumar <span>S.</span></div>
-            
-            <!-- Mobile Menu Toggle -->
             <div class="hamburger" onclick="toggleMenu()">
                 <i class="fa-solid fa-bars"></i>
             </div>
-
             <ul class="nav-links" id="navLinks">
                 <li><a href="#home" onclick="toggleMenu()">Home</a></li>
                 <li><a href="#about" onclick="toggleMenu()">About</a></li>
@@ -643,7 +627,7 @@
     </div>
 
     <!-- HERO SECTION -->
-    <div class="hero" id="home">
+    <section class="hero" id="home">
         <div class="container hero-content">
             <div class="hero-text">
                 <span class="hero-subtitle">HELLO, I'M</span>
@@ -655,11 +639,10 @@
                 <a href="#about" class="btn btn-outline" style="margin-left: 10px;">About Me</a>
             </div>
             <div class="hero-img">
-                <!-- Profile Image -->
                 <img src="kumar.jpg" alt="Kumar Sankarasubramanian">
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- ABOUT SECTION -->
     <section class="section" id="about">
@@ -673,7 +656,6 @@
                     <h2>Enterprise Architect & Strategist</h2>
                     <p>I have worked with clients from mature markets such as North America and Western Europe, responsible for Platform/Product Enterprise Architecture Design and Engineering Deliverables.</p>
                     <p>I own enterprise architecture, technology strategy, solution architecture, and thought leadership initiatives. My expertise lies in designing Microservice designs, Order management platforms, and driving Digital Strategy roadmaps.</p>
-                    
                     <div style="margin-top: 30px;">
                         <a href="resume.pdf" download class="btn">Download CV</a>
                     </div>
@@ -763,13 +745,28 @@
             </div>
             <div class="portfolio-grid">
                 <div class="portfolio-item p-bg-1">
-                    <div class="portfolio-overlay"><h4>Customer Experience Platform</h4><p>Architecture Design</p></div>
+                    <div class="portfolio-overlay">
+                        <h4>Customer Experience Platform</h4>
+                        <p>Architecture Design</p>
+                    </div>
                 </div>
                 <div class="portfolio-item p-bg-2">
-                    <div class="portfolio-overlay"><h4>Verizon Connect</h4><p>Reveal Order Management</p></div>
+                    <div class="portfolio-overlay">
+                        <h4>Verizon Connect</h4>
+                        <p>Reveal Order Management</p>
+                    </div>
                 </div>
                 <div class="portfolio-item p-bg-3">
-                    <div class="portfolio-overlay"><h4>Unified Billing Solution</h4><p>E2E Design & Integration</p></div>
+                    <div class="portfolio-overlay">
+                        <h4>Unified Billing Solution</h4>
+                        <p>E2E Design & Integration</p>
+                    </div>
+                </div>
+                <div class="portfolio-item p-bg-4">
+                    <div class="portfolio-overlay">
+                        <h4>Order Management</h4>
+                        <p>Microservice Designs</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -797,7 +794,6 @@
 
                     <div class="social-icons">
                         <a href="https://www.linkedin.com/in/kumarsankarasubramanian" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
-                        <!-- Instagram Link -->
                         <a href="https://www.instagram.com/nethrakumars/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
                     </div>
                 </div>
@@ -835,26 +831,31 @@
         </div>
     </div>
 
-    <!-- FLOATING WHATSAPP BUTTON -->
-    <a href="https://wa.me/917395943676" class="floating-whatsapp" target="_blank" title="Chat on WhatsApp">
+    <!-- FLOATING WHATSAPP BUTTON (Default Message Included) -->
+    <div onclick="openWhatsappDefault()" class="floating-whatsapp" title="Chat on WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
-    </a>
+    </div>
 
     <!-- SCRIPTS -->
     <script>
-        // 1. WhatsApp Logic
+        // Professional Default Message
+        const defaultMsg = "Hi, I saw your profile and would love to connect and explore how we can work together. Please let me know a good time to talk.";
+        const phoneNumber = "917395943676";
+
+        // 1. Logic for FORM Button
         function sendToWhatsapp() {
             var name = document.getElementById("contact-name").value.trim();
             var email = document.getElementById("contact-email").value.trim();
             var budget = document.getElementById("contact-budget").value.trim();
             var desc = document.getElementById("contact-desc").value.trim();
             
-            var phoneNumber = "917395943676";
             var message = "";
 
             if (name === "" && email === "" && desc === "") {
-                message = "Hi, I saw your profile and would love to connect and explore how we can work together. Please let me know a good time to talk.";
+                // If form is empty -> Send Default Professional Message
+                message = defaultMsg;
             } else {
+                // If form has data -> Send Data
                 message = "Hi, I am interested in hiring you.\n\n" +
                           "Name: " + name + "\n" +
                           "Email: " + email + "\n" +
@@ -866,7 +867,13 @@
             window.open(url, '_blank');
         }
 
-        // 2. Mobile Menu Toggle Logic
+        // 2. Logic for FLOATING Button (Always sends default message)
+        function openWhatsappDefault() {
+            var url = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(defaultMsg);
+            window.open(url, '_blank');
+        }
+
+        // 3. Mobile Menu Toggle Logic
         function toggleMenu() {
             var nav = document.getElementById("navLinks");
             nav.classList.toggle("active");
