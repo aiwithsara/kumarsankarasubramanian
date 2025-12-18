@@ -14,7 +14,7 @@
     <style>
         /* --- CSS VARIABLES & RESET --- */
         :root {
-            --primary-color: #F9004D; /* Ozlan Red */
+            --primary-color: #F9004D;
             --heading-color: #1f1f25;
             --body-color: #717173;
             --bg-light: #f8f9fc;
@@ -73,7 +73,7 @@
         }
 
         .section {
-            padding: 120px 0;
+            padding: 100px 0; /* Reduced slightly for better general fit */
         }
 
         .section.bg-gray {
@@ -117,10 +117,12 @@
         /* --- HEADER --- */
         .header {
             padding: 20px 0;
-            position: absolute;
+            position: fixed; /* Fixed for better mobile UX */
             width: 100%;
             top: 0;
             z-index: 1000;
+            background: rgba(255, 255, 255, 0.95); /* Slight background for readability */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .navbar {
@@ -130,7 +132,7 @@
         }
 
         .logo {
-            font-size: 30px;
+            font-size: 26px;
             font-weight: 800;
             color: var(--heading-color);
         }
@@ -155,13 +157,21 @@
             color: var(--primary-color);
         }
 
+        /* Mobile Menu Toggle (Hidden on Desktop) */
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--heading-color);
+        }
+
         /* --- HERO SECTION --- */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             background: linear-gradient(to right, #f8f9fc 50%, #fff 50%);
-            padding-top: 80px;
+            padding-top: 120px; /* Account for fixed header */
             padding-bottom: 50px;
         }
 
@@ -186,7 +196,7 @@
         }
 
         .hero h1 {
-            font-size: 60px;
+            font-size: 55px;
             font-weight: 900;
             margin-bottom: 25px;
         }
@@ -309,35 +319,6 @@
             margin-bottom: 25px;
         }
 
-        /* --- RESUME --- */
-        .resume-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-        }
-
-        .resume-column h3 {
-            font-size: 28px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-        }
-
-        .resume-card {
-            background: var(--white);
-            padding: 30px;
-            margin-bottom: 30px;
-            border-radius: 6px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            border-left: 4px solid var(--primary-color);
-            transition: var(--transition);
-        }
-
-        .resume-card:hover { transform: translateX(10px); }
-        .resume-card span { font-size: 14px; color: var(--primary-color); font-weight: 500; }
-        .resume-card h4 { margin: 10px 0 5px; font-size: 20px; }
-        .resume-card .school { font-size: 14px; font-style: italic; color: #888; }
-
         /* --- PORTFOLIO --- */
         .portfolio-grid {
             display: grid;
@@ -382,14 +363,14 @@
         /* --- CONTACT SECTION --- */
         .contact-section-wrapper {
             background: linear-gradient(to bottom, #fff 0%, #f8f9fc 100%);
-            padding: 100px 0;
+            padding: 80px 0;
         }
 
         .contact-split {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             gap: 50px;
         }
 
@@ -443,7 +424,7 @@
 
         .social-icons a {
             color: #999;
-            font-size: 24px; /* Larger icons */
+            font-size: 24px;
             transition: 0.3s;
         }
 
@@ -503,6 +484,7 @@
             display: inline-block;
             margin-top: 10px;
             border-radius: 2px;
+            width: 100%; /* Full width on button looks better on forms */
         }
 
         .btn-hire-dark:hover {
@@ -514,27 +496,21 @@
         .floating-whatsapp {
             position: fixed;
             bottom: 30px;
-            right: 30px;
+            right: 20px;
             background-color: #25D366;
             color: #fff;
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 35px;
+            font-size: 30px;
             box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
             z-index: 9999;
             transition: all 0.3s ease;
         }
 
-        .floating-whatsapp:hover {
-            transform: scale(1.1);
-            background-color: #128C7E;
-        }
-
-        /* --- FOOTER COPYRIGHT --- */
         .footer-bottom {
             background: #fff;
             padding: 30px 0;
@@ -542,35 +518,104 @@
             border-top: 1px solid #eee;
         }
 
-        .footer-bottom p {
-            font-size: 14px;
-            color: #888;
+        .footer-bottom p { font-size: 14px; color: #888; }
+
+        /* ------------------------------------------- */
+        /* --------- MOBILE RESPONSIVE STYLES -------- */
+        /* ------------------------------------------- */
+
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 45px; }
+            .section { padding: 80px 0; }
         }
 
-        /* --- MOBILE RESPONSIVE --- */
-        @media (max-width: 992px) {
+        @media (max-width: 768px) {
+            /* Header & Nav */
+            .hamburger { display: block; }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px; /* Below header */
+                left: 0;
+                width: 100%;
+                background: #fff;
+                flex-direction: column;
+                align-items: center;
+                padding: 30px 0;
+                gap: 20px;
+                box-shadow: 0 10px 10px rgba(0,0,0,0.05);
+                display: none; /* Hidden by default */
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            /* Hero */
             .hero {
-                flex-direction: column;
-                height: auto;
-                background: var(--bg-light);
+                flex-direction: column-reverse; /* Text below image on mobile, or standard column */
+                flex-direction: column; 
                 text-align: center;
-                padding-bottom: 60px;
+                padding-top: 100px;
+                background: var(--bg-light); /* Remove split gradient */
             }
-            .hero-content { flex-direction: column; }
-            .hero-text { padding: 0; margin-bottom: 40px; }
-            .hero h1 { font-size: 40px; }
-            .hero p { margin: 0 auto 30px; }
-            .hero-img { justify-content: center; }
-            
-            .about-grid, .resume-grid {
-                grid-template-columns: 1fr;
-            }
-            .navbar .nav-links { display: none; }
-            
-            .contact-split {
+
+            .hero-content {
                 flex-direction: column;
+                gap: 40px;
             }
-            .contact-right { width: 100%; }
+
+            .hero-text {
+                padding-right: 0;
+                order: 2; /* Text below image */
+            }
+
+            .hero-img {
+                width: 100%;
+                justify-content: center;
+                order: 1; /* Image on top */
+                margin-bottom: 20px;
+            }
+            
+            .hero-img img {
+                max-height: 400px; /* Limit height on mobile */
+                width: 100%;
+                object-fit: cover;
+                object-position: top;
+            }
+
+            .hero h1 {
+                font-size: 32px; /* Smaller font for mobile */
+                margin-bottom: 15px;
+            }
+
+            .hero p {
+                font-size: 15px;
+                margin-bottom: 30px;
+            }
+
+            /* Sections General */
+            .section { padding: 60px 0; }
+            .section-title h2 { font-size: 32px; }
+
+            /* Grids */
+            .about-grid, 
+            .skills-grid,
+            .resume-grid, 
+            .services-grid, 
+            .contact-split {
+                grid-template-columns: 1fr;
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .about-text h2 { font-size: 28px; }
+
+            /* Contact */
+            .contact-right { width: 100%; min-width: auto; }
+            .contact-form-card { padding: 30px 20px; }
+            .contact-left h2 { font-size: 24px; }
+            .arrow-line { display: none; } /* Hide arrow on mobile */
         }
     </style>
 </head>
@@ -580,14 +625,19 @@
     <div class="header">
         <div class="container navbar">
             <div class="logo">Kumar <span>S.</span></div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#services">Expertise</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <!-- Resume Link Removed -->
-                <li><a href="#contact">Contact</a></li>
+            
+            <!-- Mobile Menu Toggle -->
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" onclick="toggleMenu()">Home</a></li>
+                <li><a href="#about" onclick="toggleMenu()">About</a></li>
+                <li><a href="#skills" onclick="toggleMenu()">Skills</a></li>
+                <li><a href="#services" onclick="toggleMenu()">Expertise</a></li>
+                <li><a href="#portfolio" onclick="toggleMenu()">Portfolio</a></li>
+                <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
             </ul>
         </div>
     </div>
@@ -605,8 +655,8 @@
                 <a href="#about" class="btn btn-outline" style="margin-left: 10px;">About Me</a>
             </div>
             <div class="hero-img">
-                <!-- Profile Image Updated to Local File -->
-                <img src="kumar.jpg" alt="Kumar Sankarasubramanian">
+                <!-- Profile Image -->
+                <img src="profile.jpg" alt="Kumar Sankarasubramanian">
             </div>
         </div>
     </div>
@@ -625,7 +675,6 @@
                     <p>I own enterprise architecture, technology strategy, solution architecture, and thought leadership initiatives. My expertise lies in designing Microservice designs, Order management platforms, and driving Digital Strategy roadmaps.</p>
                     
                     <div style="margin-top: 30px;">
-                        <!-- DOWNLOAD CV BUTTON LINKED TO resume.pdf -->
                         <a href="resume.pdf" download class="btn">Download CV</a>
                     </div>
                 </div>
@@ -791,10 +840,10 @@
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- SCRIPT FOR WHATSAPP LOGIC -->
+    <!-- SCRIPTS -->
     <script>
+        // 1. WhatsApp Logic
         function sendToWhatsapp() {
-            // 1. Get values from the form inputs
             var name = document.getElementById("contact-name").value.trim();
             var email = document.getElementById("contact-email").value.trim();
             var budget = document.getElementById("contact-budget").value.trim();
@@ -803,12 +852,9 @@
             var phoneNumber = "917395943676";
             var message = "";
 
-            // 2. Check if fields are empty
             if (name === "" && email === "" && desc === "") {
-                // If empty, use the professional generic message
                 message = "Hi, I saw your profile and would love to connect and explore how we can work together. Please let me know a good time to talk.";
             } else {
-                // If filled, construct a message with the form details
                 message = "Hi, I am interested in hiring you.\n\n" +
                           "Name: " + name + "\n" +
                           "Email: " + email + "\n" +
@@ -816,11 +862,14 @@
                           "Project Description: " + desc;
             }
 
-            // 3. Create the WhatsApp URL
             var url = "https://wa.me/" + phoneNumber + "?text=" + encodeURIComponent(message);
-
-            // 4. Open in a new tab
             window.open(url, '_blank');
+        }
+
+        // 2. Mobile Menu Toggle Logic
+        function toggleMenu() {
+            var nav = document.getElementById("navLinks");
+            nav.classList.toggle("active");
         }
     </script>
 
